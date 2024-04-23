@@ -22,6 +22,8 @@ int main() {
     answer = round(answer);
     answer /= 10;
 
+    cout << fixed;
+    cout.precision(1);
     cout << answer << endl;
     return 0;
 }
