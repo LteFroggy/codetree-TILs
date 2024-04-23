@@ -25,5 +25,6 @@ int main() {
     cout << fixed;
     cout.precision(1);
     cout << answer << endl;
+    cout << unsetf(ios::fixed);
     return 0;
 }
