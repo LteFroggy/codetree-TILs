@@ -126,15 +126,31 @@ int main() {
     }
 
     // 2진수에서 가능한 숫자 리스트 찾고 map에 넣기
-    vector<int> list_2 = getList_binary("1010");
+    vector<int> list_2 = getList_binary(val_2);
     map<int, int> map;
     for (auto v : list_2) {
         map.insert(make_pair(v, 0));
     }
 
+    /*
+    cout << "2에서 가능한 리스트" << endl;
+    for (auto v : list_2) {
+        cout << v << " ";
+    }
+    cout << endl;
+    */
+
     // 3진수 가능한 값 모두 가져오기
     vector<int> list_3 = getList_3(val_3);
  
+    /*
+    cout << "3에서 가능한 리스트" << endl;
+    for (auto v : list_2) {
+        cout << v << " ";
+    }
+    cout << endl;
+    */
+
     for (auto val : list_3) {
         if (map.find(val) != map.end()) {
             cout << val << endl;
