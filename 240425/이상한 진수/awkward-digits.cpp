@@ -134,11 +134,6 @@ int main() {
 
     // 3진수 가능한 값 모두 가져오기
     vector<int> list_3 = getList_3(val_3);
-
-    for (auto v : list_3) {
-        cout << v << " ";
-    }
-    cout << endl;
  
     for (auto val : list_3) {
         if (map.find(val) != map.end()) {
