@@ -15,6 +15,7 @@ int get_biggest_divisor(int a, int b) {
 
     for (int i = val; i > 0; i--) {
         if (a % i == 0 && b % i == 0) {
+            cout << a << " % " << i << " = 0이고, " << b << " % " << i << " = 0이므로 최대공약수는 " << i << endl;
             return i;
         }
     }
@@ -25,7 +26,6 @@ int main() {
     cin >> a >> b;
 
     int biggest_common_divisor = get_biggest_divisor(a, b);
-
     int divided_result = (a > b ? a : b) / biggest_common_divisor;
     int result = (a > b ? b : a) * divided_result;
     
