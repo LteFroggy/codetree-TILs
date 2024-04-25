@@ -14,7 +14,7 @@ int main() {
     int N;
     cin >> N;
     int count = 0;
-    while (N != 0 && count++) {
+    while (N != 0 && ++count) {
         int value = floor(sqrt(N));
         N -= pow(value, 2);
     }
