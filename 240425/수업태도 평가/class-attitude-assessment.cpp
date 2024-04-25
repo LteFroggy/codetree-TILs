@@ -61,6 +61,12 @@ int main() {
         que.pop();
     }
 
+    // 모두 동점이었다면 tie 출력
+    if (que.size() == 0) {
+        cout << "Tie" << endl;
+        return 0;
+    }
+    
     // 두번째로 작은 사람이 누군지 저장하고, 같은 값을 가진 사람이 있다면 Tie출력, 아니라면 그 사람 출력
     int second_min_score = que.top().second;
     string second_min_name = que.top().first;
