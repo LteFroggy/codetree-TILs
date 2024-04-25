@@ -55,7 +55,6 @@ int main() {
 
     // 제일 작은 값인 사람 뺴기
     int min_score = que.top().second;
-    cout << min_score << endl;
     que.pop();
     // 제일 작은 값이 여러 명일 수 있으므로, 다 빼주기
     while (que.top().second == min_score) {
@@ -65,7 +64,6 @@ int main() {
     // 두번째로 작은 사람이 누군지 저장하고, 같은 값을 가진 사람이 있다면 Tie출력, 아니라면 그 사람 출력
     int second_min_score = que.top().second;
     string second_min_name = que.top().first;
-    cout << second_min_score << endl;
     que.pop();
     if (que.size() != 0 && que.top().second == second_min_score) {
         cout << "Tie" << endl;
