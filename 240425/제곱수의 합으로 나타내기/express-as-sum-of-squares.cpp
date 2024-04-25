@@ -11,11 +11,9 @@ using namespace std;
 
     sqrt(N)을 수행하고, pow(floor(N), 2)을 계속 해서 0이 될때까지 하면 된다. -> X, 최소를 구하지 못한다
 
-    DP로 접근해보자. 각 수까지 오는 데에 최소 횟수를 저장하면 됨
+    DP로 접근해보자. 각 수까지 오는 데에 걸린 횟수를 저장하면 됨
     queue<pair<int, int>>를 사용할 것.
 */
-
-
 
 int main() {
     int N;
@@ -50,7 +48,6 @@ int main() {
         }
     }
     
-
     cout << answer << endl;
     return 0;
 }
