@@ -1,5 +1,7 @@
 #include <iostream>
 
+using namespace std;
+
 long mul_recur(int a, int b) {
     if (b == 1)
         return a;
