@@ -45,7 +45,10 @@ int main() {
                     int y = i + dy[k];
                     int x = j + dx[k];
 
-                    if (!inboard_check(y, x)) continue;
+                    if (!inboard_check(y, x)) {
+                        answer++;
+                        continue;
+                    }
                     if (!board[y][x]) answer++;
                 }
             }
