@@ -67,7 +67,7 @@ int main() {
             // cout << "대각선 2번 값도 1 증가하여 " << extra_bingo[1] << "이 됨" << endl;
         }
 
-        if (bingo_count == 3) {
+        if (bingo_count >= 3) {
             break;
         }
     }
