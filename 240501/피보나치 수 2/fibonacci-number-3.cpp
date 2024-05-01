@@ -19,13 +19,13 @@ int main() {
 
     for (int i = 2; i < N + 1; i++) {
         if (i == N) {
-            cout << fibonacci[i - 1] + fibonacci[i - 2];
+            cout << (fibonacci[i - 1] + fibonacci[i - 2]) % 1000000007;
         }
 
         else {
-            fibonacci.push_back(fibonacci[i-1] + fibonacci[i-2]);
+            fibonacci.push_back((fibonacci[i-1] + fibonacci[i-2]) % 1000000007);
         }
     }
-    
+
     return 0;
 }
