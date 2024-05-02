@@ -68,7 +68,7 @@ int main() {
         for (int i = 1; i < 4; i++) {
             for (int j = 1; j < 4; j++) {
                 for (int k = 0; k < 3; k++) {
-                    vector<vector<int>> tmp = rotate_tool(board, i, j, k);
+                    vector<vector<int>> tmp = rotate_tool(board, j, i, k);
                     pair<int, vector<vector<int>>> score_board = get_score(tmp);
 
                     if (max_score < score_board.first) {
@@ -83,7 +83,7 @@ int main() {
                     else if (max_score == score_board.first && min_rotation > k) {
                         min_rotation = k;
                         board_afterRotation = score_board.second;
-                        // cout << i << "," << j << "를 중심으로 " << k << "돌리면 유물 획득 가능." << endl;
+                        // cout << i << "," << j << "를 중심으로 " << k << "돌리면 " << score_board.first << "점 획득 가능." << endl;
                         // cout << "이 때의 보드판" << endl;
                         // print_board(score_board.second);
                     }
@@ -186,6 +186,7 @@ vector<vector<int>> rotate_180(vector<vector<int>> board, int center_y, int cent
     for (int k = 0; k < 3; k++) {
         new_board[y + k][x] = board[y + 2 - k][x + 2];
     }
+
     return new_board;
 }
 
