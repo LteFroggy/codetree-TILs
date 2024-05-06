@@ -25,9 +25,9 @@ int main() {
         }
     }
 
-    // 보는 방향 순서는 하, 우하대각, 우 순으로 볼 것
-    int dy[] = {1, 1, 0};
-    int dx[] = {0, 1, 1};
+    // 보는 방향 순서는 하, 우하대각, 우, 우상대각 순으로 볼 것
+    int dy[] = {1, 1, 0, -1};
+    int dx[] = {0, 1, 1, 1};
 
     for (int i = 0; i < 19; i++) {
         for (int j = 0; j < 19; j++) {
@@ -36,7 +36,7 @@ int main() {
                 int checking_val = board[i][j];
 
 
-                for (int k = 0; k < 3; k++) {
+                for (int k = 0; k < 4; k++) {
                     int y = i;
                     int x = j;
 
@@ -67,5 +67,8 @@ int main() {
             }
         }
     }
+
+    // 다 봤는데 승자가 없었다 ? 0 출력
+    cout << 0 << endl;
     return 0;
 }
