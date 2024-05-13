@@ -1,7 +1,10 @@
+// 이해 잘못 한 부분이 있었음. 그 날 나온 일은 그 날만 할 수 있는 문제였는데, 이전 날짜에 나온 일이라면 모두 할 수 있는 것으로 착각하고 풀어내서 옳은 답이 나오지 않았다.
+// 코드 쓴 게 아까워 저장
 #include <iostream>
 #include <vector>
 
 using namespace std;
+
 
 struct status {
     vector<bool> job_done;
