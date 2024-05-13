@@ -41,7 +41,7 @@ int main() {
 
             if (dp[day_next] < income_next) {
                 dp[day_next] = income_next;
-                // cout << i+1 << "일에 일을 하면 " << day_next + 1 << "일에 " << income_next << "원의 수입을 가질 수 있음" << endl;
+                cout << i+1 << "일에 일을 하면 " << day_next + 1 << "일에 " << income_next << "원의 수입을 가질 수 있음" << endl;
             }
         }
         
