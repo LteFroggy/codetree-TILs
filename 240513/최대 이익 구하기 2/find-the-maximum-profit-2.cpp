@@ -41,12 +41,12 @@ int main() {
 
             if (dp[day_next] < income_next) {
                 dp[day_next] = income_next;
-                cout << i+1 << "일에 일을 하면 " << day_next + 1 << "일에 " << income_next << "원의 수입을 가질 수 있음" << endl;
+                // cout << i+1 << "일에 일을 하면 " << day_next + 1 << "일에 " << income_next << "원의 수입을 가질 수 있음" << endl;
             }
         }
         
         // 그 다음 날의 최소 수입은 오늘 아무 일도 하지 않고 넘어갔을 때이다
-        if (dp[i + 1] == 0) {
+        if (dp[i + 1] < dp[i]) {
             dp[i + 1] = dp[i];
         }
     }
