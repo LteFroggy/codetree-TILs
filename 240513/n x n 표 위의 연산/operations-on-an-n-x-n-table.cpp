@@ -12,7 +12,7 @@ using namespace std;
 
 typedef pair<int, int> point;
 int N;
-int MAX_VAL = 0;
+int MAX_VAL = -100000007;
 int MIN_VAL = 100000007;
 
 bool inboard_check(int y, int x) {
