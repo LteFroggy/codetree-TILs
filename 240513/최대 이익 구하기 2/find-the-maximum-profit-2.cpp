@@ -10,6 +10,22 @@ struct status {
 
 typedef pair<int, int> job;
 
+void print_trace(vector<status> dp) {
+    for (int i = 0; i < dp.size(); i++) {
+        if (dp[i].income != 0) {
+            cout << i + 1 << "일차 최대 수입 : " << dp[i].income << endl;
+            cout << "한 일 목록 : ";
+            for (int j = 0; j < dp.size() - 1; j++) {
+                if (dp[i].job_done[j]) {
+                    cout << j+1 << " ";
+                }
+            }
+            cout << endl;
+        }
+    }
+    cout << endl << endl;
+}
+
 /*
     매일 매일 일이 생긴다. 이렇게 슬픈 일이....
     하는 데 걸리는 날짜와 받는 보수가 정해져있다
@@ -61,7 +77,8 @@ int main() {
                     dp[day_afterWork].job_done = dp[i].job_done;
                     dp[day_afterWork].job_done[j] = true;
 
-                    // cout << i+1 << "일차에 " << j + 1  << "일차의 일을 수행하면 " << day_afterWork + 1 << "일에 최대의 수입인 " << money_afterWork << "원을 벌 수 있음" << endl;
+                    cout << i+1 << "일차에 " << j + 1  << "일차의 일을 수행하면 " << day_afterWork + 1 << "일에 최대의 수입인 " << money_afterWork << "원을 벌 수 있음" << endl;
+                    print_trace(dp);
                 }
             }
         }
