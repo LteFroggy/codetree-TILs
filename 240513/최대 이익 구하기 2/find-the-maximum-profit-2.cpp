@@ -24,14 +24,14 @@ int main() {
     int N;
     cin >> N;
 
-    vector<job> jobs(N + 1);
+    vector<job> jobs(N);
 
     for (int i = 0; i < N; i++) {
         cin >> jobs[i].first;
         cin >> jobs[i].second;
     }
 
-    vector<int> dp(N, 0);
+    vector<int> dp(N + 1, 0);
 
     for (int i = 0; i < N; i++) {
         // 그 날 주어진 일을 할 경우
@@ -41,6 +41,7 @@ int main() {
 
             if (dp[day_next] < income_next) {
                 dp[day_next] = income_next;
+                // cout << i+1 << "일에 일을 하면 " << day_next + 1 << "일에 " << income_next << "원의 수입을 가질 수 있음" << endl;
             }
         }
         
