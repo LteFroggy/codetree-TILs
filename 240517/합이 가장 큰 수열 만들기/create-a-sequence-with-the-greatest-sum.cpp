@@ -29,7 +29,7 @@ int main() {
         int best_sum = 0;
         for (int j = i-1; j >= 0; j--) {
             // 자신보다 작은 값만이 다음으로 자신을 고를 수 있으므로 자기보다 큰 값은 보지 않는다
-            if (numbers[j] > numbers[i]) {
+            if (numbers[j] >= numbers[i]) {
                 continue;
             }
             
