@@ -1,52 +1,53 @@
 #include <iostream>
+#include <utility>
 #include <vector>
 
 using namespace std;
 
 /*
     길이가 n인 수열, 수열에서 원소를 맘대로 뽑아 길이가 가장 긴 오름차순 수열?
-    다음 값을 보았을 때 이전 값보다 작으면서 값이 가장 큰 값을 기억하면 된다.
-
-    가장 작은 값을 뽑았을 때 항상 가장 긴 수열이 나올까? 그건 아님.
-    시작 위치를 어디로 잡느냐에 따라 다를 수 있다.
-
-    근데 다 해봤자 1 ~ 1000 더하기이므로 그냥 하자.
+    
+    DP로 각 값마다 자신까지 오는 데에 Best인 수열의 길이와 원소의 합을 기억시키자.
 */
 
 int main() {
     int N;
     cin >> N;
     vector<int> numbers(N);
+    vector<pair<int, int>> dp(N);
 
-    int max_sum = 0;
-    int max_length = 0;
-    int sum = 0;
-    int length = 0;
-    int val_before = 0;
     for (int i = 0; i < N; i++) {
         cin >> numbers[i];
     }
 
-    // 시작 위치를 1번부터 1000번으로 하면서 가능한 최대한 긴 오름차순 수열 만들기를 해볼 것
-    for (int i = 0; i < N; i++) {
-        val_before = numbers[i];
-        sum = numbers[i];
-        length = 1;
-        for (int j = i + 1; j < N; j++) {
-            // 이번 숫자가 이전 숫자보다 크거나 같다면, 그대로 적용
-            if (numbers[j] >= val_before) {
-                val_before = numbers[j];
-                sum += numbers[j];
-                length++;
+    // dp[0]값은 직접 주기
+    dp[0] = make_pair(1, numbers[0]);
+
+    // i번쨰까지 오는 방법 중 제일 베스트인 방법을 찾을 것
+    for (int i = 1; i < N; i++) {
+        int best_length = 0;
+        int best_sum = 0;
+        for (int j = i-1; j >= 0; j--) {
+            // 자신보다 작은 값만이 다음으로 자신을 고를 수 있으므로 자기보다 큰 값은 보지 않는다
+            if (numbers[j] > numbers[i]) {
+                continue;
+            }
+            
+            // 자기보다 앞에 있고, 자기보다 작은 값 중 최대의 length와 sum을 찾아낸다.
+            if (best_length < dp[j].first || (best_length == dp[j].first && best_sum < dp[j].second)) {
+                best_length = dp[j].first;
+                best_sum = dp[j].second;
             }
         }
-
-        if (max_length < length || (max_length == length && max_sum < sum)) {
-            max_length = length;
-            max_sum = sum;
-        }
+        
+        // 거기에 자신의 값을 더해서 저장한다.
+        dp[i] = make_pair(best_length + 1, best_sum + numbers[i]);
     }
 
-     cout << max_sum << endl;
+    // for (auto v : dp) {
+    //     cout << v.first << ", " << v.second << endl;
+    // }
+
+    cout << dp[N-1].second << endl;
     return 0;
 }
