@@ -45,7 +45,7 @@ using namespace std;
 
 int main() {
     int N;
-    int answer = 0;
+    long long answer = 0;
     cin >> N;
 
     vector<int> rows(N);
