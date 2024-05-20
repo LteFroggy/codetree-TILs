@@ -62,7 +62,7 @@ int main() {
 
                 bundle_count++;
 
-                // 기존 박스에 넣었는데, 박스 꽉 차면 이제 포장하기
+                // 기존 박스에 넣었는데, 박스가 꽉 찼다면 이제 포장하기
                 if (bundle_count == m) {
                     answer += K + (bundle_count) * (max_size - min_size);
                     bundle_count = 0;
@@ -70,6 +70,9 @@ int main() {
             }
         }
     }
+
+    // 끝났다면, 마지막 남은 박스까지 포장해준다
+    answer += bundle_count * (max_size - min_size);
 
     cout << answer << endl;
     return 0;
