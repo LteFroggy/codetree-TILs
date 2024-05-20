@@ -1,87 +1,64 @@
 #include <iostream>
+#include <vector>
+#include <climits>
 
 using namespace std;
 
 /*
     물건은 같이 포장하냐 새로 포장하냐밖에 없다
-    그리디로 할 것
+    
+    매 자리마다 이번에 물건을 새로 포장해서 끝까지 포장하는 경우의 수를 탐색한다.
+    비용만 저장하면 된다. 어차피 매번 내가 새로운 포장이 될 것이니까
 */
 
 int main() {
     int N, m, K;
     cin >> N >> m >> K;
 
-    int min_size;
-    int max_size;
-    int bundle_count = 0;
-    int answer = 0;
-    for (int i = 0; i < N; i++) {
-        int size;
-        cin >> size;
-
-        // 번들이 없으면 일단 새로운 번들에 싸야 함
-        if (bundle_count == 0) {
-            min_size = size;
-            max_size = size;
-            bundle_count = 1;
-            // cout << size << "는 박스가 없어 새로 포장 시작함" << endl;
-        }
-
-        // 번들이 있다면, 넣을지 새로 쌀지 결정해야 함
-        else {
-            int existing_box_cost;
-            int new_box_cost;
-
-            // 기존 박스에 그대로 넣으면 드는 비용 계산 (포장비 제외)
-            int tmp_min_size = min_size;
-            int tmp_max_size = max_size;
-
-            if (min_size > size) {
-                tmp_min_size = size;
-            }
-            else if (max_size < size) {
-                tmp_max_size = size;
-            }
-
-            existing_box_cost = (bundle_count + 1) * (tmp_max_size - tmp_min_size);
-            
-            new_box_cost = (bundle_count) * (max_size - min_size) + K;
-
-            // 새 박스를 쓰는 게 더 싸거나 또이또이라면, 새 박스 쓴다. 그래야 하나라도 더 많은 품목을 넣을 기회(더 저렴해질 기회)를 얻을 수 있기 때문
-            if (existing_box_cost >= new_box_cost) {
-                // cout << size << "에 대해 새 박스를 쓰는 것이 더 저렴하여 새 박스 사용함" << endl;
-                // cout << "현재 비용은 " << answer << " + " << K << " + (" << bundle_count << " * (" << max_size << " - " << min_size << "))" << " = " << answer + K + (bundle_count * (max_size - min_size)) << endl;
-                answer += K + (bundle_count * (max_size - min_size));
-                min_size = size;
-                max_size = size;
-                bundle_count = 1;
-            }
-
-            // 그게 아니면, 기존 박스에 넣는다
-            else {
-                // cout << size << "는 기존 박스에 그대로 들어감" << endl;
-                min_size = tmp_min_size;
-                max_size = tmp_max_size;
-
-                bundle_count++;
-
-                // 기존 박스에 넣었는데, 박스가 꽉 찼다면 이제 포장하기
-                if (bundle_count == m) {
-                    // cout << "박스가 다 차서 새로 포장 시작해야 함" << endl;
-                    // cout << "현재 비용은 " << answer << " + " << K << " + (" << bundle_count << " * (" << max_size << " - " << min_size << "))" << " = " << answer + K + (bundle_count * (max_size - min_size)) << endl;
-                    answer += K + (bundle_count) * (max_size - min_size);
-                    bundle_count = 0;
-                }
-            }
-        }
+    vector<int> objects(N + 1);
+    vector<long long> dp(N + 1, LLONG_MAX);
+    
+    for (int i = 1; i <= N; i++) {
+        cin >> objects[i];
     }
 
-    // 끝났다면, 마지막 남은 박스까지 포장해준다
-    if (bundle_count != 0) {
-        answer += K + (bundle_count * (max_size - min_size));
-    }
+    dp[0] = 0;
+
+    for (int std = 1; std <= N; std++) {
+        // 매번 i번째 원소부터 가능한 최대 개수까지 포장을 진행하고, 그때그때의 값을 DP에 넣을 것
+        // 먼저 새로 포장한다고 가정한다.
+        int base_value = dp[std - 1] + K;
+        // 이번에 새로 포장한게 가장 작은 값이라면, 이걸로 저장
+        if (base_value < dp[std]) {
+            dp[std] = base_value;
+        }
         
+        
+        // 앞으로 m개를 이 박스 안에 모두 넣는다고 가정하고, 그때그때의 값을 구할 것
+        int value;
+        int min_val = objects[std];
+        int max_val = objects[std];
+        for (int ptr = 1; (ptr < m) && (std + ptr <= N); ptr++) {
+            if (min_val > objects[std + ptr]) {
+                min_val = objects[std + ptr];
+            }
+            else if (max_val < objects[std + ptr]) {
+                max_val = objects[std + ptr];
+            }
 
-    cout << answer << endl;
+            value = base_value;
+            value += (ptr + 1) * (max_val - min_val);
+
+            if (value < dp[std + ptr]) {
+                dp[std + ptr] = value;
+            }
+        }
+    }
+
+    // for (int i = 1; i <= N; i++) {
+    //     cout << dp[i] << endl;
+    // }
+
+    cout << dp[N] << endl;
     return 0;
 }
