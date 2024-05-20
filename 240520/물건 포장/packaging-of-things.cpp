@@ -16,6 +16,7 @@ int main() {
     int bundle_count = 0;
     int answer = 0;
     for (int i = 0; i < N; i++) {
+        cout << endl;
         int size;
         cin >> size;
 
@@ -24,6 +25,7 @@ int main() {
             min_size = size;
             max_size = size;
             bundle_count = 1;
+            cout << size << "는 박스가 없어 새로 포장 시작함" << endl;
         }
 
         // 번들이 있다면, 넣을지 새로 쌀지 결정해야 함
@@ -44,11 +46,12 @@ int main() {
 
             existing_box_cost = (bundle_count + 1) * (tmp_max_size - tmp_min_size);
             
-            new_box_cost = (bundle_count) * (max_size - min_size);
-            new_box_cost += K + size;
+            new_box_cost = (bundle_count) * (max_size - min_size) + K;
 
             // 새 박스를 쓰는 게 더 비용이 절감된다면, 새 박스 쓴다
-            if (existing_box_cost > new_box_cost) {
+            if (existing_box_cost >= new_box_cost) {
+                cout << size << "에 대해 새 박스를 쓰는 것이 더 저렴하여 새 박스 사용함" << endl;
+                cout << "현재 비용은 " << answer << " + " << K << " + (" << bundle_count << " * (" << max_size << " - " << min_size << "))" << " = " << answer + K + (bundle_count * (max_size - min_size)) << endl;
                 answer += K + (bundle_count * (max_size - min_size));
                 min_size = size;
                 max_size = size;
@@ -57,6 +60,7 @@ int main() {
 
             // 그게 아니면, 기존 박스에 넣는다
             else {
+                cout << size << "는 기존 박스에 그대로 들어감" << endl;
                 min_size = tmp_min_size;
                 max_size = tmp_max_size;
 
@@ -64,6 +68,8 @@ int main() {
 
                 // 기존 박스에 넣었는데, 박스가 꽉 찼다면 이제 포장하기
                 if (bundle_count == m) {
+                    cout << "박스가 다 차서 새로 포장 시작해야 함" << endl;
+                    cout << "현재 비용은 " << answer << " + " << K << " + (" << bundle_count << " * (" << max_size << " - " << min_size << "))" << " = " << answer + K + (bundle_count * (max_size - min_size)) << endl;
                     answer += K + (bundle_count) * (max_size - min_size);
                     bundle_count = 0;
                 }
@@ -72,7 +78,10 @@ int main() {
     }
 
     // 끝났다면, 마지막 남은 박스까지 포장해준다
-    answer += bundle_count * (max_size - min_size);
+    if (bundle_count != 0) {
+        answer += K + (bundle_count * (max_size - min_size));
+    }
+        
 
     cout << answer << endl;
     return 0;
