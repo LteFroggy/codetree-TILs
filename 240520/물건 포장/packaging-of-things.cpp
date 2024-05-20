@@ -16,7 +16,6 @@ int main() {
     int bundle_count = 0;
     int answer = 0;
     for (int i = 0; i < N; i++) {
-        cout << endl;
         int size;
         cin >> size;
 
@@ -25,7 +24,7 @@ int main() {
             min_size = size;
             max_size = size;
             bundle_count = 1;
-            cout << size << "는 박스가 없어 새로 포장 시작함" << endl;
+            // cout << size << "는 박스가 없어 새로 포장 시작함" << endl;
         }
 
         // 번들이 있다면, 넣을지 새로 쌀지 결정해야 함
@@ -48,10 +47,10 @@ int main() {
             
             new_box_cost = (bundle_count) * (max_size - min_size) + K;
 
-            // 새 박스를 쓰는 게 더 비용이 절감된다면, 새 박스 쓴다
+            // 새 박스를 쓰는 게 더 싸거나 또이또이라면, 새 박스 쓴다. 그래야 하나라도 더 많은 품목을 넣을 기회(더 저렴해질 기회)를 얻을 수 있기 때문
             if (existing_box_cost >= new_box_cost) {
-                cout << size << "에 대해 새 박스를 쓰는 것이 더 저렴하여 새 박스 사용함" << endl;
-                cout << "현재 비용은 " << answer << " + " << K << " + (" << bundle_count << " * (" << max_size << " - " << min_size << "))" << " = " << answer + K + (bundle_count * (max_size - min_size)) << endl;
+                // cout << size << "에 대해 새 박스를 쓰는 것이 더 저렴하여 새 박스 사용함" << endl;
+                // cout << "현재 비용은 " << answer << " + " << K << " + (" << bundle_count << " * (" << max_size << " - " << min_size << "))" << " = " << answer + K + (bundle_count * (max_size - min_size)) << endl;
                 answer += K + (bundle_count * (max_size - min_size));
                 min_size = size;
                 max_size = size;
@@ -60,7 +59,7 @@ int main() {
 
             // 그게 아니면, 기존 박스에 넣는다
             else {
-                cout << size << "는 기존 박스에 그대로 들어감" << endl;
+                // cout << size << "는 기존 박스에 그대로 들어감" << endl;
                 min_size = tmp_min_size;
                 max_size = tmp_max_size;
 
@@ -68,8 +67,8 @@ int main() {
 
                 // 기존 박스에 넣었는데, 박스가 꽉 찼다면 이제 포장하기
                 if (bundle_count == m) {
-                    cout << "박스가 다 차서 새로 포장 시작해야 함" << endl;
-                    cout << "현재 비용은 " << answer << " + " << K << " + (" << bundle_count << " * (" << max_size << " - " << min_size << "))" << " = " << answer + K + (bundle_count * (max_size - min_size)) << endl;
+                    // cout << "박스가 다 차서 새로 포장 시작해야 함" << endl;
+                    // cout << "현재 비용은 " << answer << " + " << K << " + (" << bundle_count << " * (" << max_size << " - " << min_size << "))" << " = " << answer + K + (bundle_count * (max_size - min_size)) << endl;
                     answer += K + (bundle_count) * (max_size - min_size);
                     bundle_count = 0;
                 }
