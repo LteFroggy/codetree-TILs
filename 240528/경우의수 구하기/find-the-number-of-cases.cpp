@@ -13,9 +13,9 @@ using namespace std;
     mCn이다.
 */
 int main() {
-    int N, M;
+    long long N, M;
     cin >> N >> M;
-    int answer = 1;
+    long long answer = 1;
     
     for (int i = 0; i < N; i++) {
         answer *= M - i;
