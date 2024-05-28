@@ -16,9 +16,9 @@ int main() {
     long long N, M;
     cin >> N >> M;
     long long answer = 1;
-    
-    for (int i = 0; i < N; i++) {
-        answer *= M - i;
+
+    for (int i = M; i > M - N; i--) {
+        answer *= i;
     }
     for (int i = 2; i <= N; i++) {
         answer /= i;
