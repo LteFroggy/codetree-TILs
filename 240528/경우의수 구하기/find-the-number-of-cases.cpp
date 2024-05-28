@@ -17,11 +17,15 @@ int main() {
     cin >> N >> M;
     long long answer = 1;
 
-    for (int i = M; i > M - N; i--) {
+    for (int i = M; i > N; i--) {
+        // cout << answer << " * " << i << " = ";
         answer *= i;
+        // cout << answer << endl;
     }
-    for (int i = 2; i <= N; i++) {
+    for (int i = 2; i <= M - N; i++) {
+        // cout << answer << " / " << i << " = ";
         answer /= i;
+        // cout << answer << endl;
     }
 
     cout << answer << endl;
