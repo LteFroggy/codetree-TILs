@@ -20,7 +20,7 @@ int main() {
         answer *= M - i;
     }
     for (int i = 2; i <= N; i++) {
-        answer /= N;
+        answer /= i;
     }
 
     cout << answer << endl;
