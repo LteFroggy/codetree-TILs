@@ -16,8 +16,11 @@ int main() {
     cin >> N >> M;
     int answer = 1;
     
-    for (int i = 0; i < M-N; i++) {
+    for (int i = 0; i < N; i++) {
         answer *= M - i;
+    }
+    for (int i = 2; i <= N; i++) {
+        answer /= N;
     }
 
     cout << answer << endl;
