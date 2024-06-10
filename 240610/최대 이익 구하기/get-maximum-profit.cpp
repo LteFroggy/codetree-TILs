@@ -80,7 +80,7 @@ int main() {
     }
 
     // 마지막 날도 만약 그 전 날보다 돈을 덜 벌었다면 그냥 그 전날에 일을 안 하는게 나은 것
-    if (dp[N + 1] < DP[N]) {
+    if (dp[N + 1] < dp[N]) {
         cout << dp[N] << endl;
     } else {
         cout << dp[N + 1] << endl;
