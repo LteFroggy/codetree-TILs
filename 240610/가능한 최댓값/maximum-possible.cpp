@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <utility>
-#include <cstring> // memset을 사용하기 위함
-
 
 using namespace std;
 
@@ -15,9 +13,15 @@ using namespace std;
     DP[0][0][0] = 0
     DP[i][j][k]의 기본값은 DP[i - 1][j][k]
     새로운 열에 대해서 왼쪽 값을 선택할 경우,
-    DP[i][j][k] = max(DP[i][j][k], DP[i-1][j-1][j] + l_value)
+    DP[i][j][k] = max(DP[i][j][k], DP[i-1][j-1][k] + l_value)
     새로운 열에 대해서 오른쪽 값을 선택할 경우, 
     DP[i][j][k] = max(DP[i][j][k], DP[i-1][j][k-1] + r_value)
+
+    예를 들어
+    DP[30][14][15]를 고를 떄,
+    기본은 DP[29][14][15]로 출발
+    왼쪽 값을 고르는 경우 탐색을 위해 
+    DP[30][14][15], DP[29][13][15] + l_value 중 큰 값을  구한다.
 */
 
 int main() {
@@ -30,20 +34,24 @@ int main() {
     vector<vector<vector<int>>> dp(N + 1, vector<vector<int>>(16, vector<int>(16)));
 
     // 입력받기
-    for (int i = 1; i < N; i++) {
+    for (int i = 1; i <= N; i++) {
         for (int j = 0; j < 2; j++) {
             if (j == 0) cin >> pairs[i].first;
             else cin >> pairs[i].second;
         }
     }
 
+    // for (int i = 1; i <= N; i++) {
+    //     cout << pairs[i].first << " " << pairs[i].second << endl;
+    // }
+
     dp[0][0][0] = 0;
 
     for (int i = 1; i <= N; i++) {
         int l_value = pairs[i].first;
         int r_value = pairs[i].second;
-        for (int j = 0; j < 16 && j <= i; j++) {
-            for (int k = 0; k < 16 && j + k <= i; k++) {
+        for (int j = 0; j <= 15 && j <= i; j++) {
+            for (int k = 0; k <= 15 && j + k <= i; k++) {
                 // 기본값은 이전 상태 그대로
                 dp[i][j][k] = dp[i - 1][j][k];
 
@@ -58,10 +66,10 @@ int main() {
                     dp[i][j][k] = max(dp[i][j][k], dp[i-1][j][k-1] + r_value);
                 }
 
-                // 위의 과정을 수행하면, 어떤 열에서 왼쪽 값을 고르는 경우와 오른쪽 값을 고르는 경우에 대해서 N개, K개 선택에 대한 모든 경우를 확인할 수 있다.
-                if (j + k == i || j + k == 30) {
-                    cout << "DP[" << i << "][" << j << "][" << k << "] = " << dp[i][j][k] << endl; 
-                }
+                // 위의 과정을 수행하면, 어떤 열에서 왼쪽 값을 고르는 경우와 오른쪽 값을 고르는 경우 중 더 큰 값을 골라 올 수 있다.
+                // if (j + k == 1) {
+                // cout << "DP[" << i << "][" << j << "][" << k << "] = " << dp[i][j][k] << endl; 
+                // }
             }
         }
     }
