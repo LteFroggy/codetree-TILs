@@ -11,10 +11,10 @@ int main() {
     int N;
     cin >> N;
 
-    vector<int> dp(N + 2, 0);
+    vector<long long> dp(N + 2, 0);
 
     for (int i = 1; i <= N; i++) {
-        int time, money;
+        long time, money;
         cin >> time >> money;
 
         // 오늘 수익이 어제 수익보다 적다면, 그냥 어제까지처럼 일 하고 하루 쉬는 게 돈을 더 많이 번다.
@@ -28,8 +28,8 @@ int main() {
         }
 
         // 오늘 일을 하는 경우
-        int time_passed = i + time;
-        int money_earned = dp[i] + money;
+        long long time_passed = i + time;
+        long long money_earned = dp[i] + money;
         if (dp[time_passed] < money_earned) {
             dp[time_passed] = money_earned;
         }
