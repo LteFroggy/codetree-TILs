@@ -1,5 +1,6 @@
 #include <iostream>
-#include <cmath>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,12 +11,59 @@ using namespace std;
     
     정수를 배치하는 경우의 수를 구하는 방법이 어떻게 될까?
 
-    고정칸이 있다면, 그 고정칸 앞뒤로 가능한 경우의 수를 모두 곱해보자
+    뭐가 하나 추가될 때 마다 경우의 수가 너무 많아지므로, DP로 가자
+    i가 고정값이 아닌 경우에, 
+    DP[i] = DP[i - 2] * 2이다. 
+    2개를 정순으로 배열하거나, 역순으로 배열할 수 있기 때문
 
+    고정값인 경우에, DP[i] = DP[i - 2]이다. 고정값이면 순서가 바뀔 수 없기 때문
+
+    각 행에서는 바로 전열에서 값 그대로 붙이기, 2열 전에 값에 대해 값 뒤집기가 가능하다.
+    그런데 고정값이라면, 전열에서 값 그대로 붙이기만 가능하다.
+
+    X
     
+    1
+
+    1 2
+
+    1 2 3
+
 */
 
 int main() {
-    // 여기에 코드를 작성해주세요.
+    int N, M;
+    cin >> N >> M;
+
+    vector<int> fixed(M);
+    vector<int> DP(N + 2, 0);
+    for (int i = 0; i < M; i++) {
+        cin >> fixed[i];
+    }
+
+
+    // DP 진행
+    int fixed_idx = 0;
+    DP[0] = 1;
+    DP[1] = 1;
+
+    for (int i = 2; i <= N; i++) {
+        // 이번 위치가 고정값이라면, 값 뒤집기가 불가능하므로 1열 전의 값을 그대로 쓴다.
+        // 이 다음 열 역시 값 뒤집기가 안되므로, 1열 전의 값을 그대로 써야 한다.
+        // 그리고 고정값 확인용 Index를 늘린다.
+        if (i == fixed[fixed_idx]) {
+            DP[i] = DP[i - 1];
+            DP[i + 1] = DP[i];
+            i++;
+            fixed_idx++;
+        }
+
+        // 고정값이 아니라면, 2열 전의 값에 뒤집어 붙이기 + 이전 열의 값에 이어붙이기가 가능하다.
+        else {
+            DP[i] = DP[i - 2] + DP[i - 1];
+        }
+    }
+
+    cout << DP[N] << endl;
     return 0;
 }
