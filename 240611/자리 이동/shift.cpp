@@ -28,7 +28,13 @@ using namespace std;
     1 2
 
     1 2 3
+    1 3 2
 
+    1 2 3 4
+    1 3 2 4
+
+    1 2 3 4 5
+    1 3 2 4 5
 */
 
 int main() {
@@ -44,21 +50,30 @@ int main() {
     // 고정값을 작은 값 순으로 소팅한다
     sort(fixed.begin(), fixed.end());
 
+    // for (auto v : fixed) cout << v << " ";
+    // cout << endl;
+
 
     // DP 진행
     int fixed_idx = 0;
     DP[0] = 1;
     DP[1] = 1;
 
-    for (int i = 2; i <= N; i++) {
+    bool flag = false;
+    for (int i = 1; i <= N; i++) {
         // 이번 위치가 고정값이라면, 값 뒤집기가 불가능하므로 1열 전의 값을 그대로 쓴다.
-        // 이 다음 열 역시 값 뒤집기가 안되므로, 1열 전의 값을 그대로 써야 한다.
+        // 이 다음 위치 역시 값 뒤집기가 안되므로, 1열 전의 값을 그대로 써야 한다. 이를 위해 Flag변수를 사용한다.
         // 그리고 고정값 확인용 Index를 늘린다.
         if (i == fixed[fixed_idx]) {
             DP[i] = DP[i - 1];
-            DP[i + 1] = DP[i];
-            i++;
+            flag = true;
             fixed_idx++;
+        }
+
+        // 고정값 바로 다음 값도 뒤집기가 안 되므로 이어서 써야 한다.
+        else if (flag) {
+            DP[i] = DP[i - 1];
+            flag = false;
         }
 
         // 고정값이 아니라면, 2열 전의 값에 뒤집어 붙이기 + 이전 열의 값에 이어붙이기가 가능하다.
@@ -68,5 +83,9 @@ int main() {
     }
 
     cout << DP[N] << endl;
+
+    for (int i = 1; i <= N; i++) {
+        cout << "DP[" << i << "] = " << DP[i] << endl;
+    }
     return 0;
 }
