@@ -41,6 +41,9 @@ int main() {
         cin >> fixed[i];
     }
 
+    // 고정값을 작은 값 순으로 소팅한다
+    sort(fixed.begin(), fixed.end());
+
 
     // DP 진행
     int fixed_idx = 0;
