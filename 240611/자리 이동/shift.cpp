@@ -84,8 +84,8 @@ int main() {
 
     cout << DP[N] << endl;
 
-    for (int i = 1; i <= N; i++) {
-        cout << "DP[" << i << "] = " << DP[i] << endl;
-    }
+    // for (int i = 1; i <= N; i++) {
+    //     cout << "DP[" << i << "] = " << DP[i] << endl;
+    // }
     return 0;
 }
