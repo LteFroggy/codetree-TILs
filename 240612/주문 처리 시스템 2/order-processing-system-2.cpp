@@ -42,8 +42,8 @@ int main() {
         }
     }
 
-    for (auto v : possible_values) cout << v << " ";
-    cout << endl;
+    // for (auto v : possible_values) cout << v << " ";
+    // cout << endl;
 
     // DP를 사용한다. 기본값인 10001은 만들어질 수 없는 상태라는 뜻
     // DP의 값은 몇 번의 처리를 거쳐야 만들어질 수 있는 값인지를 저장하며, 최소 값만 유지할 것
