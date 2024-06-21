@@ -43,7 +43,7 @@ int main() {
 
             for (int k = 0; k + tmp <= K; k++) {
                 DP[i][k + tmp] += DP[i - 1][k];
-                DP[i][k + tmp] %= 10007
+                DP[i][k + tmp] %= 10007;
             }
         }
     }
