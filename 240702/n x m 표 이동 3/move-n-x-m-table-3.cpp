@@ -76,5 +76,7 @@ int main() {
     //     }
     //     cout << endl;
     // }
+
+    cout << DP[N][M] << endl;
     return 0;
 }
