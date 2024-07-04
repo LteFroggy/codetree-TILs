@@ -20,34 +20,33 @@ int main() {
     cin >> N;
     int answer = 0;
 
-    vector<set<int>> DP_now(5);
-    vector<set<int>> DP_past(5);
+    vector<vector<set<int>>> DP(2, vector<set<int>>(5));
 
-    DP_now[0].insert(0);
+    DP[0][0].insert(0);
 
     for (int i = 1; i <= N; i++) {
         int tmp;
         cin >> tmp;
 
-        if (DP_now[4].count(tmp))
+        int now = i % 2;
+        int past = now == 1 ? 0 : 1;
+
+        if (DP[past][4].count(tmp))
             answer++;
 
-        DP_past = DP_now;
-        DP_now = vector<set<int>>(5);
-
-        DP_now[0] = DP_past[0];
+        DP[now][0] = DP[past][0];
 
         for (int j = 1; j <= 4; j++) {
-            DP_now[j] = DP_past[j];
+            DP[now][j] = DP[past][j];
 
-            for (auto v : DP_now[j-1]) {
-                DP_now[j].insert(v + tmp);
+            for (auto v : DP[now][j-1]) {
+                DP[now][j].insert(v + tmp);
             }
         }
 
         // for (int j = 1; j <= 4; j++) {
         //     cout << "DP[" << i << "][" << j << "] = ";
-        //     for (auto val : DP_now[j]) {
+        //     for (auto val : DP[now][j]) {
         //         cout << val << " ";
         //     }
         //     cout << endl;
