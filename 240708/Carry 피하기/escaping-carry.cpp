@@ -68,10 +68,10 @@ void GetResult(int n, int value, int count, vector<int> numbers) {
     /* 사용하는 경우 */
     // 먼저 사용 가능한지 조건을 봐야 한다
     int possible_flag = true;
-    int i = 1;
+    int i = 0;
 
     // number[n]의 자리수까지만 체크해본다
-    while (numbers[n] / int(pow(10, i - 1)) != 0) {
+    while (numbers[n] / int(pow(10, (++i) - 1)) != 0) {
         // 234에서 2번째 수를 구하고 싶다면, 234 % 10^2 를 한 결과를 10^(2-1)로 나눠야 3이라는 값을 얻을 수 있다.
         int ith_number = (numbers[n] % int(pow(10, i))) / int(pow(10, i - 1));
         int ith_value = (value % int(pow(10, i))) / int(pow(10, i - 1));
@@ -81,7 +81,6 @@ void GetResult(int n, int value, int count, vector<int> numbers) {
             possible_flag = false;
             break;
         }
-        i++;
     }
 
     // 만약 숫자를 더하는 데에 무리가 없었다면, 숫자를 더해서 다음으로 보낸다
@@ -116,12 +115,12 @@ void GetResult2(int n, int value, int count, vector<int> numbers) {
     /* 사용하는 경우 */
     // 먼저 사용 가능한지 조건을 봐야 한다
     int possible_flag = true;
-    int i = 1;
+    int i = 0;
 
     cout << numbers[n] << "과 " << value << "를 비교하는 상황입니다." << endl;
 
     // number[n]의 자리수까지만 체크해본다
-    while (numbers[n] / int(pow(10, i - 1)) != 0) {
+    while (numbers[n] / int(pow(10, (++i) - 1)) != 0) {
         // 234에서 2번째 수를 구하고 싶다면, 234 % 10^2 를 한 결과를 10^(2-1)로 나눠야 3이라는 값을 얻을 수 있다.
         int ith_number = (numbers[n] % int(pow(10, i))) / int(pow(10, i - 1));
         int ith_value = (value % int(pow(10, i))) / int(pow(10, i - 1));
