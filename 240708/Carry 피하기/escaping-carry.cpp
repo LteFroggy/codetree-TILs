@@ -140,7 +140,7 @@ void GetResult2(int n, int value, int count, vector<int> numbers) {
     // 만약 숫자를 더하는 데에 무리가 없었다면, 숫자를 더해서 다음으로 보낸다
     if (possible_flag) {
         cout << value + numbers[n] << "이 다음 값으로 간다" << endl << endl;
-        GetResult(n+1, value + numbers[n], count + 1, numbers);
+        GetResult2(n+1, value + numbers[n], count + 1, numbers);
     }
 
     // 숫자를 더할 수 없었다면 더이상 진행할 수 없는 것이니 결과를 저장한다.
@@ -158,5 +158,5 @@ void GetResult2(int n, int value, int count, vector<int> numbers) {
     }
 
     /* 사용하지 않는 경우 */
-    GetResult(n + 1, value, count, numbers);
+    GetResult2(n + 1, value, count, numbers);
 }
