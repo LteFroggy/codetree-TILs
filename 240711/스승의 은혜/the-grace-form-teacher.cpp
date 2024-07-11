@@ -51,7 +51,7 @@ int main() {
     // 남은 돈이 다음 선물의 절반 가격도 안 된다면, 아무리 할인을 많이 받아도 하나 더 구매는 불가능하다.
     // 어떤 물건의 배송비가 0이라고 해도, 최대 할인되는 금액은 (물건의 총 금액 / 2)이기 때문
     // 그걸 고려하면서 다음 선물 후보들을 하나씩 본다
-    while (B >= (que.top().first + que.top().second) / 2) {
+    while (!que.empty() && B >= (que.top().first + que.top().second) / 2) {
         // 어떤 물건을 할인받을지 정한다. 물건이 제일 비싼 것을 할인받는게 좋음
         int coupon_price = max_present_price > que.top().first ? max_present_price : que.top().first;
 
