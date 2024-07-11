@@ -14,13 +14,13 @@ using namespace std;
 
 int main() {
     // radix sort 저장용 배열
-    // 누적합이기 때문에 뒤에 한 칸을 여유분으로 잡아주어야 오류 없이 돌아간다.
-    int *nArr = new int[25002]{0};
+    int nArr[25001]{0};
 
     int N, K;
     cin >> N >> K;
 
-    int *nValues = new int[N + 1]{0};
+    // 누적합이기 때문에 뒤에 한 칸을 여유분으로 잡아주어야 오류 없이 돌아간다.
+    int *nValues = new int[N + 2]{0};
 
     for (int i = 0; i < K; i++) {
         int start, end;
@@ -51,7 +51,6 @@ int main() {
         }
     }
 
-    delete[] nArr;
     delete[] nValues;
     return 0;
 }
