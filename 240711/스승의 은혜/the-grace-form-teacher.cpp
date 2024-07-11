@@ -62,6 +62,8 @@ int main() {
             present_count++;
             break;
         }
+
+        que.pop();
     }
 
     cout << present_count << endl;
