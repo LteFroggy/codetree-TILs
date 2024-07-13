@@ -43,7 +43,7 @@ inline bool inboard_check(int y, int x) {
     visited : 방문 가능, 불가능한 위치를 표현한 2차원 벡터
     left_
 */
-void moveAB(pair<int, int> aLoc, pair<int, int> bLoc, vector<vector<bool>> visited, int left_squares) {
+void moveAB(pair<int, int> aLoc, pair<int, int> bLoc, vector<vector<bool>>& visited, int left_squares) {
     // 문제가 말한 조건(남은 칸이 0칸이며 동일한 위치에 도달했을 경우)에 해당하면, sAnswer를 1 더한다
     if (left_squares == 0 && aLoc.first == bLoc.first && aLoc.second == bLoc.second) {
         sAnswer++;
@@ -80,25 +80,21 @@ void moveAB(pair<int, int> aLoc, pair<int, int> bLoc, vector<vector<bool>> visit
             B_possible_locs.push_back({y_b_new, x_b_new});
     }
 
-    // 이제 2중 for문을 통해 A와 B가 이동 가능한 모든 위치로 보내준다.
-    for (int i = 0; i < A_possible_locs.size(); i++) {
-        for (int j = 0; j < B_possible_locs.size(); j++) {
-            /// visited_temp를 만들어서 다음 재귀로 보내줄 때 사용한다.
-            vector<vector<bool>> visited_temp = visited;
-            visited_temp[A_possible_locs[i].first][A_possible_locs[i].second] = true;
-            visited_temp[B_possible_locs[j].first][B_possible_locs[j].second] = true;
-
-            // 그런데 보내기 전 하나 체크해야 할 것은, A와 B가 같은 칸에 있게 되는지의 여부이다.
-            if (A_possible_locs[i].first == B_possible_locs[j].first && A_possible_locs[i].second == B_possible_locs[j].second) {
-                // A와 B가 같은 칸으로 가게 되는 경우에는 남은 칸 수가 1칸인 경우에만 진행시킨다.
+     // A와 B가 이동 가능한 모든 위치로 보내준다.
+    for (const auto& a_next : A_possible_locs) {
+        for (const auto& b_next : B_possible_locs) {
+            if (a_next == b_next) {
                 if (left_squares == 1) {
-                    moveAB(A_possible_locs[i], B_possible_locs[j], visited_temp, left_squares - 1);
+                    visited[a_next.first][a_next.second] = true;
+                    moveAB(a_next, b_next, visited, left_squares - 1);
+                    visited[a_next.first][a_next.second] = false;
                 }
-            }
-            // 그러한 경우가 아니라면 그냥 보내면 된다.
-            // 이 경우에는 A, B가 서로 다른 칸으로 움직였을 것이므로 남은 칸 수를 -2해서 보낸다.
-            else {
-                moveAB(A_possible_locs[i], B_possible_locs[j], visited_temp, left_squares - 2);
+            } else {
+                visited[a_next.first][a_next.second] = true;
+                visited[b_next.first][b_next.second] = true;
+                moveAB(a_next, b_next, visited, left_squares - 2);
+                visited[a_next.first][a_next.second] = false;
+                visited[b_next.first][b_next.second] = false;
             }
         }
     }
