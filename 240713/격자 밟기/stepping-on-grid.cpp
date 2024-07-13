@@ -120,7 +120,7 @@ int main() {
     left_squares -= K;
 
     // 방문 불가능한 칸 체크하기
-    for (int i = 0; i <= K; i++) {
+    for (int i = 0; i < K; i++) {
         int y, x;
         cin >> y >> x;
         visited[y][x] = true;
