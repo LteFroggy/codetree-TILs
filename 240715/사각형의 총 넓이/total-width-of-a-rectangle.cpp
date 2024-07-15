@@ -1,5 +1,6 @@
 #include <iostream>
-#include <vector>
+#include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,21 +22,31 @@ using namespace std;
             2-2. 둘의 y범위가 겹치는 경우 (B.y.start < A.y.start < B.y.end || B.y.start < A.y.end < B.y.end)
                  겹치지 않는 y값의 크기를 구하고, (겹치지 않는 y값) x (겹치는 x값) + (y값) x (겹치지 않는 x값)으로 값을 구해 B를 더한다.
 
-            2-3. B의 y범위가 A의 y범위에 포함되는 경우 (A.y.start < B.y.start < B.y.end < A.y.end)
+            2-3. B의 y범위가 A의 y범위에 포함되는 경우 (A.y.start <= B.y.start < B.y.end <= A.y.end)
                  A와 B의 겹치는 x값에 대해서는 계산하지 않고, 겹치지 않는 x값에 대한 부분만 구한다.
 
-            2-4. A의 y범위가 B의 y범위에 포함되는 경우 (B.y.start < A.y.start < A.y.end < B.y.end)
+            2-4. A의 y범위가 B의 y범위에 포함되는 경우 (B.y.start <= A.y.start < A.y.end <= B.y.end)
                  겹치는 x값 부분에서는 (A.y.start - B.y.start) + (B.y.end - A.y.end)를 곱해서 구해주고, 나머지는 그대로 구한다.
             
         }
     3. A -> B, B -> C로 바꿔서 2를 반복한다.
 */
+struct cmp {
+    bool operator()(pair<point, point> a, pair<point, point> b) {
+        if ()
+        return a.first.first > b.first.first;
+        
+    }
+};
+
+typedef pair<int, int> point;
 
 int main() {
     int N;
     cin >> N;
 
-    // 저장시에는 pair<pair<int, int>, pair<int, int>> 로 저장하자.
+    // 저장시에는 priority_queue<pair<pair<int, int>, pair<int, int>> 로 저장하자.
+    priority_queue<pair<point, point> vector<pair<point, point>, > ranges
     
     return 0;
 }
