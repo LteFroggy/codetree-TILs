@@ -58,19 +58,27 @@ int main() {
     // S배열을 만들어야 한다. 따라서 생성
     vector<int> S_past;
     vector<int> S_now;
-    S_past.push_back(3);
+    S_now.push_back(3);
     int i(0);
     // 먼저 S가 어디까지 확장되어야 하는지 확인하며 S를 만든다
     while (S_sum_now < N) {
         S_sum_past = S_sum_now;
+        S_past = S_now;
         // i가 1 늘어날때마다 sum = sum * 2 + (i + 3)이 된다.
         i++;
         S_sum_now = S_sum_past * 2 + (i + 3);
 
         // 그에 따라 S_now도 갱신한다.
-        S_now.insert(S_now.begin(), S_past.begin(), S_past.end());
         S_now.push_back(i + 3);
         S_now.insert(S_now.end(), S_past.begin(), S_past.end());
+
+        // cout << "i = " << i << endl;
+        // cout << "S_sum = " << S_sum_now << endl;
+        // cout << "S = ";
+        // for (auto v : S_now) {
+        //     cout << v << " ";
+        // }
+        // cout << endl << endl;
     }
     /*
         출력해본 S_sum
