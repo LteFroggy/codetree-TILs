@@ -34,7 +34,6 @@ using namespace std;
             N -= S[i][j];
         }
 
-
         // 이번 mo..o에서 목표치에 도달한다면, m인지 o인지 확인하기 위해 아래 조건문으로 들어간다
         else {
             // 만약 N == 1(하나만 더 세는 경우)이라면, mo..o에서 m이 내가 찾던 문자열인 것
@@ -52,35 +51,31 @@ int main() {
     int N;
     cin >> N;
 
-    // i = 0일 때 S[0].sum = 3이므로 sum은 3으로 시작
-    vector<int> S_sum;
+    // i = 0일 때 sum = 3이므로 sum은 3으로 시작
+    int S_sum_past(0);
+    int S_sum_now(3);
+
+    // S배열을 만들어야 한다. 따라서 생성
+    vector<int> S_past;
+    vector<int> S_now;
+    S_past.push_back(3);
     int i(0);
-    S_sum.push_back(3);
-    // 먼저 S가 어디까지 확장되어야 하는지 확인한다.
-    while (S_sum[i] < N) {
+    // 먼저 S가 어디까지 확장되어야 하는지 확인하며 S를 만든다
+    while (S_sum_now < N) {
+        S_sum_past = S_sum_now;
         // i가 1 늘어날때마다 sum = sum * 2 + (i + 3)이 된다.
         i++;
-        S_sum.push_back(S_sum[i - 1] * 2 + (i + 3));
+        S_sum_now = S_sum_past * 2 + (i + 3);
+
+        // 그에 따라 S_now도 갱신한다.
+        S_now.insert(S_now.begin(), S_past.begin(), S_past.end());
+        S_now.push_back(i + 3);
+        S_now.insert(S_now.end(), S_past.begin(), S_past.end());
     }
     /*
         출력해본 S_sum
         S_sum : 3 10 25 
     */
-    
-
-    vector<vector<int>> S(i + 1);
-    S[0].push_back(3);
-
-    // 이제 S를 만든다.
-    for (int j = 1; j < i; j++) {
-        S[j].insert(S[j].begin(), S[j - 1].begin(), S[j - 1].end());
-        S[j].push_back(j + 3);
-        S[j].insert(S[j].end(), S[j - 1].begin(), S[j - 1].end());
-    }
-
-    // i번째 값은 아래와 같이 만든다. 설명은 111번 줄 주석에 있음
-    S[i].push_back(i + 3);
-    S[i].insert(S[i].end(), S[i - 1].begin(), S[i - 1].end());
 
     /*
         출력해본 S
@@ -115,12 +110,12 @@ int main() {
     이를 이용해 풀어보자
 */
 
-    N -= S_sum[i - 1];
+    N -= S_sum_past;
     
-    for (int j = 0; j < S[i].size(); j++) {
+    for (int j = S_now.size() / 2; j < S_now.size(); j++) {
         // 이번 mo..o를 세어도 목표치까지 도달하지 못한다면, 계속 센다.
-        if (N - S[i][j] > 0) {
-            N -= S[i][j];
+        if (N - S_now[j] > 0) {
+            N -= S_now[j];
         }
 
         // 이번 mo..o에서 목표치에 도달한다면, m인지 o인지 확인하기 위해 아래 조건문으로 들어간다
