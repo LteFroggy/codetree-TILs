@@ -27,37 +27,55 @@ int main() {
 
     // 일단 어디까지 가야 S[t]가 N보다 커지는지(N의 위치까지 도달할 수 있는지) 찾아낸다
     while (N > length) {
+        t++;
         length *= 2;
         length += t + 3;
-        t++;
     }
+
+    // cout << "t = " << t << "까지 진행함" << endl;
+    // cout << "이 때의 총 길이는 " << length << endl;
 
     // 거기서부터 N의 위치를 파악해 나갈 것
     while (true) {
+        // 사용하는 값은 왼쪽 길이, 가운데 길이, 오른쪽 범위이다.
         // 왼쪽의 길이는 S[t-1] + t + 3 + S[t-1]에서 S[t-1]까지만이다.
         // 따라서 S[t] - t - 3 / 2를 수행하면 왼쪽 길이가 나옴
-        // 예를 들어 S[1]은 3 + 4 + 3이라, 총 길이는 10이고 0 1 2까지 왼쪽, 3 4 5 6이 가운데, 7 8 9가 오른쪽이다.
-        // S[2]는 10 + 5 + 10이기 때문에 0 ~ 9(<10)가 왼쪽, 10 ~ 14(<15)가 중간, 15 ~ 24(15<=)가 오른쪽이다.
+        // 가운데 길이는 S[t]에 대해 t + 3이므로 t + 3이 가운데 길이이다.
+        // 오른쪽 길이는, 왼쪽 길이 + 가운데 길이보다 N값이 크면 오른쪽에 포함되는 것이다. 이를 이용해서 수행
+
         int left_length = (length - t - 3) / 2;
-        int right_length = left_length;
         int center_length = t + 3;
+        int right_length = left_length + center_length;
+
+        // cout << endl;
+        // cout << "t = " << t << "인 경우" << endl;
+        // cout << "총 길이는 " << length << endl;
+        // cout << "왼쪽 길이는 " << left_length << endl;
+        // cout << "가운데 길이는 " << center_length << endl;
+        // cout << "오른쪽 범위는 " << right_length << "이상인 경우부터이다." << endl;
+        // cout << "현재 N값은 " << N << endl;
 
         // N이 왼쪽에 포함되는 경우
         if (N < left_length) {
             length = left_length;
             t--;
+
+            // cout << "N은 왼쪽 범위에 포함된다. " << endl;
         }
 
         // N이 오른쪽에 포함되는 경우
-        else if (left_length + center_length < N) {
-            N -= left_length + center_length;
-            length = right_length;
+        else if (right_length <= N) {
+            N -= right_length;
+            length = left_length;
             t--;
+
+            // cout << "N은 오른쪽 범위에 포함된다. " << endl;
         }
 
         // N이 가운데에 포함되는 경우
         else {
             N -= left_length;
+            // cout << "N이 가운데 범위에 포함된다. " << endl;
 
             // 가운데에서 1번째 원소인 경우에만 m이고, 나머지는 o이다.
             if (N == 1) {
@@ -67,7 +85,6 @@ int main() {
             else {
                 cout << 'o' << endl;
             }
-
             break;
         }
     }
