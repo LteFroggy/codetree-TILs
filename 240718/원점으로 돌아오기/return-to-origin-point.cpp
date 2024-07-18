@@ -42,11 +42,8 @@ int main() {
     // 처음은 방향을 어디로 가든 상관 없으므로, UDLR중에 아무것도 아닌 값으로 보낸다.
     state(visited, 0, 0, points, N, 'x');
 
-    // 불가능하면 -1을 출력하면 됨
-    if (sAnswer == 0) 
-        cout << -1 << endl;
-    else 
-        cout << sAnswer << endl;    
+    // 결과 출력
+    cout << sAnswer << endl;    
     return 0;
 }
 
