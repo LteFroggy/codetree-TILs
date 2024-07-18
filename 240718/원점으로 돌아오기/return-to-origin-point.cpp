@@ -42,7 +42,11 @@ int main() {
     // 처음은 방향을 어디로 가든 상관 없으므로, UDLR중에 아무것도 아닌 값으로 보낸다.
     state(visited, 0, 0, points, N, 'x');
 
-    cout << sAnswer << endl;    
+    // 불가능하면 -1을 출력하면 됨
+    if (sAnswer == 0) 
+        cout << -1 << endl;
+    else 
+        cout << sAnswer << endl;    
     return 0;
 }
 
@@ -50,12 +54,30 @@ int main() {
 void state(vector<bool>& visited, int y_loc, int x_loc, const vector<pair<int, int>> &points, int left_points, char direction) {
     // 만약 지금 종료조건에 해당한다면, sAnswer를 1 증가시키고 끝낸다.
     // 종료조건은, 모든 점을 방문했으면서 원점으로 돌아갈 수 있어야 한다
-    // 원점으로 돌아갈 수 있다는 것은, x혹은 y좌표가 0이라는 뜻이다.
+    // 원점으로 돌아갈 수 있다는 것은, x혹은 y좌표가 0이며, 이전에 같은 방향으로 움직이지 않았다는 것이다.
     if (left_points == 0) {
-        if (y_loc == 0 || x_loc == 0) {
-            sAnswer++;
-            return;
+        // 현재 y축 상에 존재하는 경우
+        if (x_loc == 0) {
+            // 위로 가야 돌아갈 수 있는 경우
+            if (y_loc < 0 && direction != 'U')
+                sAnswer++;
+
+            // 아래로 가야 돌아갈 수 있는 경우
+            else if (y_loc > 0 && direction != 'D')
+                sAnswer++;
         }
+
+        // 현재 x축 상에 존재하는 경우
+        else if (y_loc == 0) {
+            // 왼쪽으로 가야 돌아갈 수 있는 경우
+            if (x_loc > 0 && direction != 'L')
+                sAnswer++;
+
+            // 오른쪽으로 가야 돌아갈 수 있는 경우
+            else if (x_loc < 0 && direction != 'R')
+                sAnswer++;
+        }
+        return;
     }
 
     // 종료조건에 해당하지 않는다면, 현재 위치에서 갈 수 있는 점들을 모두 확인해야 한다
@@ -63,14 +85,14 @@ void state(vector<bool>& visited, int y_loc, int x_loc, const vector<pair<int, i
 
         int target_y = points[i].first;
         int target_x = points[i].second;
-        // 이미 가 본 점이라면 갈 필요 없음
+        // 이미 가 본 점이라면 갈 수 없음
         if (visited[i]) {
             continue;
         }
 
         // 같은 y축 선 상에 있는지 체크
         if (target_x == x_loc) {
-            // 위로 가야 하는 경우, 지금까지 온 방향이 U가 아니라면 보낸다.
+            // 위로 가야 하는 경우, 방향이 U가 아니라면 보낸다.
             if (target_y > y_loc && direction != 'U') {
                 visited[i] = true;
                 state(visited, target_y, target_x, points, left_points - 1, 'U');
