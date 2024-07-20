@@ -109,11 +109,6 @@ int main() {
             }
         }
 
-        // cout << "현재 Range 목록 : ";
-        // for (auto range : ranges)
-        //     cout << "(" << range.first << ", " << range.second << "), ";
-        // cout << endl;
-
         // 다음 이벤트가 없으면, while문이 끝난다.
         if (Events.empty()) {
             break;
@@ -126,7 +121,11 @@ int main() {
         // 계산을 위해 시작 값 기준으로 범위를 정렬
         sort(ranges.begin(), ranges.end(), range_compare);
 
-
+        // cout << "현재 Range 목록 : ";
+        // for (auto range : ranges)
+        //     cout << "(" << range.first << ", " << range.second << "), ";
+        // cout << endl;
+        
         // cout << "계산된 Range : ";
 
         // 범위(y_range)를 계산한다
@@ -136,12 +135,6 @@ int main() {
             if (y_start == -1 && y_end == -1) {
                 y_start = range_now->first;
                 y_end = range_now->second;
-            }
-
-            // 이번이 마지막 값이라면, 다음 범위가 없을 것이므로 지금의 범위를 y_range에 더한다
-            if (range_now == ranges.end() - 1) {
-                // cout << "(" << y_start << ", " << y_end << "), ";
-                y_range += y_end - y_start;
             }
             
             // 다음 범위를 보았을 때, (다음 start) <= (현재 end)라면 둘의 범위가 겹치는 것이다.
@@ -166,7 +159,8 @@ int main() {
             }
         }
 
-        // cout << endl;
+        // 마지막 값이라 range에 적용되지 못한 y_start, y_end를 적용한다
+        y_range += y_end - y_start;
 
         // 범위 * x길이 로 넓이를 계산한다.
         int next_xLoc = Events.top().xLoc;
