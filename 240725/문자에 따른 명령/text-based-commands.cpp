@@ -36,8 +36,8 @@ point Simulate_Destination(const point now_loc, const int now_dir, const int a, 
     pt_return.first += dy[now_dir] * a;
     pt_return.second += dx[now_dir] * a;
 
-    pt_return.first += dy[now_dir + 1] * b;
-    pt_return.second += dx[now_dir + 1] * b;
+    pt_return.first += dy[(now_dir + 1) % 4] * b;
+    pt_return.second += dx[(now_dir + 1) % 4] * b;
 
     return pt_return;
 }
@@ -79,7 +79,7 @@ int main() {
     }
 
 
-    // // cout << "예상 도착 지점은 " << now_loc.first << ", " << now_loc.second << endl;
+    // cout << "예상 도착 지점은 " << now_loc.first << ", " << now_loc.second << endl;
 
 
 
@@ -95,7 +95,7 @@ int main() {
     int next_dir = 0;
     for (int i = 0; i < cmd.size(); i++) {
         
-        // // cout << i << "번째 명령이 틀렸다고 가정한 경우" << endl;
+        // cout << i << "번째 명령이 틀렸다고 가정한 경우" << endl;
 
         // i번째 명령이 틀렸다고 가정해보자. 그럼 일단 i+1 ~ N번째 명령을 다 수행했을 때 어떤 결과가 나오는지를 알아야 한다.
         // 그래야 바른 명령으로 고쳤을 때 도착 지점을 유추할 수 있기 때문. 따라서 먼저 i+1 ~ N번째 명령을 수행한 경우를 보자.
@@ -120,7 +120,7 @@ int main() {
             next_dir %= 4;
         }
 
-        // // cout << i << "번째 명령을 정상적으로 수행했을 경우의 위치와 방향 : (" << next_loc.first << ", " << next_loc.second << "), " << next_dir << endl;
+        // cout << i << "번째 명령을 정상적으로 수행했을 경우의 위치와 방향 : (" << next_loc.first << ", " << next_loc.second << "), " << next_dir << endl;
 
         // 이러면 i번째 명령을 수행했을 때에 현재 위치와 향하고 있는 방향이 나온다.
         // 이 값을 이용해서 i+1 ~ N번째 명령을 수행했을 떄의 위치의 변화값을 구한다.
@@ -139,7 +139,7 @@ int main() {
             b = (dest_loc.first - next_loc.first) / dy[(next_dir + 1) % 4];
         }
 
-        // // cout << "따라서, a = " << a << ", b = " << b << endl;
+        // cout << "따라서, a = " << a << ", b = " << b << endl;
 
         // 이렇게 a와 b를 구했다면, 이제 이번 명령이 틀렸을 경우에 도착하는 모든 경우를 찾아내야 한다.
         point now_loc_tmp;
@@ -157,7 +157,7 @@ int main() {
             now_loc_tmp = Simulate_Destination(now_loc_tmp, now_dir_tmp, a, b);
             answers.insert(now_loc_tmp);
 
-            // // cout << i << "번째 명령이 F였을 경우에는, " << now_loc_tmp.first << ", " << now_loc_tmp.second << "로 가게 된다." << endl;
+            // cout << i << "번째 명령이 F였을 경우에는, " << now_loc_tmp.first << ", " << now_loc_tmp.second << "로 가게 된다." << endl;
         }
 
         // 명령이 사실 L이었을 경우
@@ -172,7 +172,7 @@ int main() {
             now_loc_tmp = Simulate_Destination(now_loc_tmp, now_dir_tmp, a, b);
             answers.insert(now_loc_tmp);
 
-            // // cout << i << "번째 명령이 L였을 경우에는, " << now_loc_tmp.first << ", " << now_loc_tmp.second << "로 가게 된다." << endl;
+            // cout << i << "번째 명령이 L이었을 경우에는, " << now_loc_tmp.first << ", " << now_loc_tmp.second << "로 가게 된다." << endl;
         }
 
         // 명령이 R이었을 경우
@@ -187,8 +187,10 @@ int main() {
             now_loc_tmp = Simulate_Destination(now_loc_tmp, now_dir_tmp, a, b);
             answers.insert(now_loc_tmp);            
 
-            // // cout << i << "번째 명령이 R였을 경우에는, " << now_loc_tmp.first << ", " << now_loc_tmp.second << "로 가게 된다." << endl;
+            // cout << i << "번째 명령이 R이었을 경우에는, " << now_loc_tmp.first << ", " << now_loc_tmp.second << "로 가게 된다." << endl;
         }
+
+        // cout << endl;
     }   
     
     // 이걸 끝까지 하면 된다. 이제 set의 길이를 출력한다
