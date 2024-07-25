@@ -77,7 +77,12 @@ int main() {
             now_dir %= 4;
         }
     }
-    /// cout << "도착 지점은 " << now_loc.first << ", " << now_loc.second << endl;
+
+
+    // // cout << "예상 도착 지점은 " << now_loc.first << ", " << now_loc.second << endl;
+
+
+
     // 이러면 도착 지점이 나온다. 이걸 저장한다.
     dest_loc.first = now_loc.first;
     dest_loc.second = now_loc.second;
@@ -89,6 +94,9 @@ int main() {
     point next_loc = now_loc;
     int next_dir = 0;
     for (int i = 0; i < cmd.size(); i++) {
+        
+        // // cout << i << "번째 명령이 틀렸다고 가정한 경우" << endl;
+
         // i번째 명령이 틀렸다고 가정해보자. 그럼 일단 i+1 ~ N번째 명령을 다 수행했을 때 어떤 결과가 나오는지를 알아야 한다.
         // 그래야 바른 명령으로 고쳤을 때 도착 지점을 유추할 수 있기 때문. 따라서 먼저 i+1 ~ N번째 명령을 수행한 경우를 보자.
         // 이를 위해서는 i번쨰 명령을 주어진 대로 수행해야 함.
@@ -112,6 +120,8 @@ int main() {
             next_dir %= 4;
         }
 
+        // // cout << i << "번째 명령을 정상적으로 수행했을 경우의 위치와 방향 : (" << next_loc.first << ", " << next_loc.second << "), " << next_dir << endl;
+
         // 이러면 i번째 명령을 수행했을 때에 현재 위치와 향하고 있는 방향이 나온다.
         // 이 값을 이용해서 i+1 ~ N번째 명령을 수행했을 떄의 위치의 변화값을 구한다.
         // a는 현재 향하고 있는 방향 기준 앞으로 얼마나 갈지, b는 오른쪽으로 얼마나 갈지이다.
@@ -120,14 +130,16 @@ int main() {
         // 위나 아래를 향하고 있다면, a가 상하방향값, b가 좌우방향값을 의미하게 된다.
         if (dy[next_dir] != 0) {
             a = (dest_loc.first - next_loc.first) / dy[next_dir];
-            b = (dest_loc.second - next_loc.second) / dx[next_dir + 1];
+            b = (dest_loc.second - next_loc.second) / dx[(next_dir + 1) % 4];
         }   
 
         // 아니라면, a가 좌우, b가 상하이다.
         else {
             a = (dest_loc.second - next_loc.second) / dx[next_dir];
-            b = (dest_loc.first - next_loc.first) / dy[next_dir + 1];
+            b = (dest_loc.first - next_loc.first) / dy[(next_dir + 1) % 4];
         }
+
+        // // cout << "따라서, a = " << a << ", b = " << b << endl;
 
         // 이렇게 a와 b를 구했다면, 이제 이번 명령이 틀렸을 경우에 도착하는 모든 경우를 찾아내야 한다.
         point now_loc_tmp;
@@ -144,6 +156,8 @@ int main() {
             // 함수를 통해 도착 예정지를 받고, 그걸 answer에 넣는다.
             now_loc_tmp = Simulate_Destination(now_loc_tmp, now_dir_tmp, a, b);
             answers.insert(now_loc_tmp);
+
+            // // cout << i << "번째 명령이 F였을 경우에는, " << now_loc_tmp.first << ", " << now_loc_tmp.second << "로 가게 된다." << endl;
         }
 
         // 명령이 사실 L이었을 경우
@@ -157,6 +171,8 @@ int main() {
             // 함수를 사용해 도착지를 받는다.
             now_loc_tmp = Simulate_Destination(now_loc_tmp, now_dir_tmp, a, b);
             answers.insert(now_loc_tmp);
+
+            // // cout << i << "번째 명령이 L였을 경우에는, " << now_loc_tmp.first << ", " << now_loc_tmp.second << "로 가게 된다." << endl;
         }
 
         // 명령이 R이었을 경우
@@ -170,6 +186,8 @@ int main() {
             // 함수를 사용해 도착지를 받는다.
             now_loc_tmp = Simulate_Destination(now_loc_tmp, now_dir_tmp, a, b);
             answers.insert(now_loc_tmp);            
+
+            // // cout << i << "번째 명령이 R였을 경우에는, " << now_loc_tmp.first << ", " << now_loc_tmp.second << "로 가게 된다." << endl;
         }
     }   
     
