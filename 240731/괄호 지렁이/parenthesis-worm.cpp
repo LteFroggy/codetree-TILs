@@ -88,7 +88,7 @@ void findBrackets(vector<vector<bool>> &visited, const vector<vector<char>> &boa
                 }
 
                 // 닫는 괄호라면, 이제 닫는 조건으로 다음으로 보내본다
-                else {
+                else if (board[y_][x_] == ')') {
                     visited[y_][x_] = true;
                     findBrackets(visited, board, y_, x_, false, count- 1, maxNum);
                     visited[y_][x_] = false;
