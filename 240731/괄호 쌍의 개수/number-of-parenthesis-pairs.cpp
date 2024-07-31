@@ -59,5 +59,10 @@ int main() {
         cout << right_possible << endl;
     }
 
+    /
+    else {
+        cout << 0 << endl;
+    }
+
     return 0;
 }
