@@ -21,8 +21,7 @@ int main() {
 
     vector<vector<char>> board(N, vector<char>(N));
     vector<vector<bool>> visited(N, vector<bool>(N, false));
-    visited[0][0] = true;
-
+    
     // 보드판 입력받기
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
@@ -30,10 +29,21 @@ int main() {
         }
     }
 
-    // 탐색 시작해보자.
+    // 탐색 시작을 위한 초기값 설정
     int y(0), x(0);
+    visited[0][0] = true;
 
-    findBrackets(visited, board, 0, 0, true, 1, 1);
+    // 처음부터 닫는 괄호 나오면 뭘 할 수가 없음. 0출력하고 종료
+    if (board[0][0] == ')') {
+        cout << 0 << endl;
+        return 0;
+    }
+
+    // 아닌 경우 탐색 수행하기
+    else {
+        findBrackets(visited, board, 0, 0, true, 1, 1);
+    }
+    
 
     cout << answer << endl;
     return 0;
