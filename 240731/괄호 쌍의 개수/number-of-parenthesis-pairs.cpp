@@ -59,7 +59,7 @@ int main() {
         cout << right_possible << endl;
     }
 
-    /
+    // 아예 2나 -2가 아니라면, 애초에 멀쩡해질 수가 없는 문자열이다.
     else {
         cout << 0 << endl;
     }
