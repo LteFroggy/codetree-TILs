@@ -28,9 +28,9 @@ int main() {
         cin >> condition >> a >> b;
 
         // 두 개가 같은 조건이라면, 뒤의 것은 경우의 수가 1이 된다.
-        if (condition == 'S') counts[b] = 1;
-        // 두 개가 다른 조건이라면, 두의 것은 경우의 수가 2가 된다.
-        else counts[b] = 2;
+        if (condition == 'S') counts[b - 1] = 1;
+        // 두 개가 다른 조건이라면, 뒤의 것은 경우의 수가 2가 된다.
+        else counts[b - 1] = 2;
     }
 
     // 다 정리했으면 곱한다.
