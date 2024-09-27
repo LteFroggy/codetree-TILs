@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 /*
@@ -26,11 +27,16 @@ int main() {
         char condition;
         int a, b;
         cin >> condition >> a >> b;
+        
+        // 작은 값, 큰 값 구분하기
+        int small = min(a, b);
+        int big = max(a, b);
+
 
         // 두 개가 같은 조건이라면, 뒤의 것은 경우의 수가 1이 된다.
-        if (condition == 'S') counts[b - 1] = 1;
+        if (condition == 'S') counts[big - 1] = 1;
         // 두 개가 다른 조건이라면, 뒤의 것은 경우의 수가 2가 된다.
-        else counts[b - 1] = 2;
+        else counts[big - 1] = 2;
     }
 
     // 다 정리했으면 곱한다.
