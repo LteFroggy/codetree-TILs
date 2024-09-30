@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <set>
 using namespace std;
 
 /*
@@ -22,7 +23,7 @@ int find_parent(vector<int> &parents, int child) {
 }
 
 // 재귀를 통해 가능한 모든 조합을 찾는다.
-int find_pair(string state, vector<int> &parents, vector<vector<int>> &diffs, int now) {
+int find_pair(string state, vector<int> &parents, vector<set<int>> &diffs, int now) {
     // 만약 N번째 값까지 모두 정하는 데에 성공했다면, 이제 끝낸다
     if (now == parents.size()) {
         /// cout << state << endl;
@@ -82,7 +83,7 @@ int main() {
     // 부모
     vector<int> parents(N);
     // 각각 달라야 하는 값들 저장
-    vector<vector<int>> diffs(N);
+    vector<set<int>> diffs(N);
 
     // 부모를 다 자기 자신으로 지정해준다.
     for (int i = 0; i < N; i++) {
@@ -109,9 +110,9 @@ int main() {
         // 항상 더 뒤에 있는 값이 앞에 있는 값과 다른 조건으로 들어가야 한다. 앞에서부터 글자를 쓰면서 비교할 것이기 때문
         else {
             if (a > b) 
-                diffs[a].push_back(b);
+                diffs[a].insert(b);
             else 
-                diffs[b].push_back(a);
+                diffs[b].insert(a);
         }
     }
 
