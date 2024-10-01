@@ -9,6 +9,9 @@ using namespace std;
     이거 map으로 해서 그냥 세면 될지도..
 */
 
+// 세 이름을 사전순으로 하나의 문자열로 합쳐주는 함수
+string getOrder(string name1, string name2, string name3);
+
 int main() {
     int N;
     unordered_map<string, int> myMap;
@@ -16,8 +19,12 @@ int main() {
     cin >> N;
 
     for (int i = 0; i < N; i++) {
-        string names;
-        getline(cin, names);
+        string name1, name2, name3;
+        cin >> name1 >> name2 >> name3;
+
+        // 서로 같은 조합이 순서가 달라 계산되지 않는 문제를 피하기 위해, 이름을 정렬한다.
+        string names = getOrder(name1, name2, name3);
+        
         if (myMap.find(names) == myMap.end()) 
             myMap.insert({names, 1});
         else 
@@ -37,4 +44,31 @@ int main() {
 
     cout << maxCount << endl;
     return 0;
+}
+
+
+string getOrder(string name1, string name2, string name3) {
+    string names;
+    if (name1 > name2) {
+        if (name2 > name3) 
+            names = name3 + name2 + name1;
+        else {
+            if (name1 > name3) 
+                names = name2 + name3 + name1;
+            else
+                names = name2 + name1 + name3;
+        }
+    }
+    else {
+        if (name2 > name3) {
+            if (name1 > name3) 
+                names = name3 + name1 + name2;
+            else
+                names = name1 + name3 + name2;
+        }
+        else
+            names = name1 + name2 + name3;
+    }
+    
+    return names;
 }
