@@ -111,7 +111,7 @@ int main() {
     
     // 이제 진짜 명령을 처리하는 부분!
     for (int i = 0; i < Q - 1; i++) {
-        int command;
+        int command = 0;
         cin >> command;
 
         // 여행 상품 생성 단계이다! 입력값을 받고 저장한다.
@@ -166,6 +166,7 @@ int main() {
                     products.pop();
                     continue;
                 }
+
                 break;
             }
 
@@ -175,7 +176,7 @@ int main() {
             }
 
             // 찾았다면, 판매 불가능 상품은 아닌지 확인하고 판매한다.
-            if (profit >= 0) {
+            else if (profit >= 0) {
                 products_bool[id] = false;
                 cout << id << endl;
                 products.pop();
