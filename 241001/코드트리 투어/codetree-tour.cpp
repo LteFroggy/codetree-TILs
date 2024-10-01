@@ -46,11 +46,20 @@ struct comp {
         // 둘이 같을 경우에는 id가 작아야 한다.
         if (a.profit == b.profit) 
             return a.id > b.id;
-
         else 
             return a.profit < b.profit;
     }
 };
+
+// 디버깅용, 힙 내부의 모든 요소를 확인하기
+void checkQueue(priority_queue<product_info, vector<product_info>, comp> a) {
+    cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" << endl;
+    cout << "큐 내부 순회입니다. (ID, 목적지, 수익, 마진)" << endl;
+    while (!a.empty()) {
+        cout << a.top().id << ", " << a.top().dest << ", " << a.top().revenue << ", " << a.top().profit << endl;
+        a.pop();
+    }
+}
 
 // 다익스트라 알고리즘을 수행한 최단거리 테이블을 반환해주는 함수
 // N은 노드 개수, edges는 각 도시에서 갈 수 있는 도시와 그 거리를 저장한 함수, start는 출발지
@@ -110,17 +119,10 @@ int main() {
             int id, revenue, dest, profit;
             cin >> id >> revenue >> dest;
             // 먼저 실제 이득을 계산한다.
-            // 만약 도착 불가능한 곳이라면, 이득을 음수값으로 한다(판매불가).
-            if (costs[dest] == INF) {
-                profit = -1;
-            }
-            // 도착이 가능하면 이득을 계산한다.
-            else {
-                profit = revenue - costs[dest];
-            }
+            profit = revenue - costs[dest];
             
             // 결과를 저장한다
-            products.push(product_info(id, revenue, dest, profit));
+            products.push(product_info(id, dest, revenue, profit));
             products_bool[id] = true;
 
             /*
@@ -132,7 +134,7 @@ int main() {
             cout << "목적지까지의 비용 : " << costs[dest] << endl;
             cout << "이득 : " << profit << endl << endl;
 
-            cout << "현재 가장 팔기 좋은 상품 번호 : " << products.top().id << endl;
+            checkQueue(products);
             */
         }
 
@@ -143,6 +145,10 @@ int main() {
             int id;
             cin >> id;
             products_bool[id] = false;
+            /*
+            cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" << endl;
+            cout << id << "번 상품 판매불가처리됨" << endl;
+            */
         }
 
         // 여행상품을 판매하는 부분이다!
@@ -169,21 +175,29 @@ int main() {
             }
 
             // 찾았다면, 판매 불가능 상품은 아닌지 확인하고 판매한다.
-            if (profit != -1) {
+            if (profit >= 0) {
                 products_bool[id] = false;
                 cout << id << endl;
                 products.pop();
+
                 /*
                 cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" << endl;
                 cout << "상품 판매함" << endl;
                 cout << "번호 : " << id << endl;
                 cout << "목적지 : " << dest << endl;
-                cout << "이득 : " << profit << endl;
+                cout << "이득 : " << profit << endl << endl;
+                
+                checkQueue(products);
                 */
             }
 
             // 판매가 불가능하면 그냥 넘긴다.
             else {
+                /*
+                cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" << endl;
+                cout << "상품 판매 실패" << endl;
+                */
+
                 cout << -1 << endl;
             }
         }
@@ -198,25 +212,30 @@ int main() {
             // 일단 cost테이블을 갱신한다.
             costs = djikstra(N, edges, new_point);
 
+            /*
+            cout << "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" << endl;
+            cout << "출발지가 " << new_point << "로 갱신되었음! 갱신된 테이블 " << endl;
+            for (auto v : costs) cout << v << " ";
+            cout << endl;
+            */
+
             // 갱신된 cost테이블을 바탕으로 proirity_queue를 갱신한다.
             while (!products.empty()) {
                 int id = products.top().id;
                 int dest = products.top().dest;
                 int revenue = products.top().revenue;
-                int profit;
-                products.pop();
+                int profit = revenue - costs[dest];
 
                 // profit을 계산한다
                 // 도착 못하는 곳이라면, profit을 -1로 설정한다(판매불가).
-                if (costs[dest] == INF) {
-                    profit = -1;
-                }
-
-                else {
-                    profit = revenue - costs[dest];
-                }
-
                 temp.push(product_info(id, dest, revenue, profit));
+                /*
+                cout << "값 갱신 수행중" << endl;
+                cout << "원래 값 : " << products.top().id << ", " << products.top().dest << ", " << products.top().revenue << ", " << products.top().profit << endl;
+                cout << "갱신된 값 : " << id << ", " << dest << ", " << revenue << ", " << profit << endl;
+                checkQueue(temp);
+                */
+                products.pop();
             }
 
             // 다 갱신 완료했다면, 이제 이걸로 products를 갱신한다
