@@ -35,6 +35,6 @@ int main() {
         }
     }
 
-    cout << names << endl;
+    cout << maxCount << endl;
     return 0;
 }
