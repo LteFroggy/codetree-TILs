@@ -123,7 +123,7 @@ int main() {
     }
 
     /// 확인용 출력 2
-    /* 
+    /*
     cout << "lines" << endl;
     for (auto v : lines) {
         cout << v.x_start << ", " << v.y_start << ", " << v.x_end << ", " << v.y_end << endl;
@@ -136,12 +136,12 @@ int main() {
     */
 
     // (x_spots * 2) * (y_spots * 2) 크기의 보드판을 만든다. *2인 이유는 사이사이 빈칸 표현을 위함
-    vector<vector<int>> board(y_spots.size() * 2 - 1, vector<int>(x_spots.size() * 2 - 1, 0));
+    vector<vector<int>> board(y_spots.size() * 2 + 1, vector<int>(x_spots.size() * 2 + 1, 0));
 
     // 보드판에 점을 적용한다
     for (int i = 0; i < dots.size(); i++) {
-        int x = dots[i].first * 2;
-        int y = dots[i].second * 2;
+        int x = dots[i].first * 2 + 1;
+        int y = dots[i].second * 2 + 1;
         board[y][x] = 7;
     }
 
@@ -150,15 +150,15 @@ int main() {
         // 먼저 이게 가로선인지 세로선인지 확인해야 함.
         // x의 시작과 끝이 같다면, 가로선이다.
         if (lines[i].x_start == lines[i].x_end) {
-            for (int j = lines[i].y_start * 2; j <= lines[i].y_end * 2; j++) {
-                board[j][lines[i].x_start * 2] = 1;
+            for (int j = lines[i].y_start * 2 + 1; j <= lines[i].y_end * 2 + 1; j++) {
+                board[j][lines[i].x_start * 2 + 1] = 1;
             }
         }
 
         // 아니면 세로선이다.
         else {
-            for (int j = lines[i].x_start * 2; j <= lines[i].x_end * 2; j++) {
-                board[lines[i].y_start * 2][j] = 1;
+            for (int j = lines[i].x_start * 2 + 1; j <= lines[i].x_end * 2 + 1; j++) {
+                board[lines[i].y_start * 2 + 1][j] = 1;
             }
         }
     }
