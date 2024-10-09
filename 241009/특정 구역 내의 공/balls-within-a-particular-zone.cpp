@@ -136,7 +136,7 @@ int main() {
     */
 
     // (x_spots * 2) * (y_spots * 2) 크기의 보드판을 만든다. *2인 이유는 사이사이 빈칸 표현을 위함
-    vector<vector<int>> board(y_spots.size() * 2, vector<int>(x_spots.size() * 2, 0));
+    vector<vector<int>> board(y_spots.size() * 2 - 1, vector<int>(x_spots.size() * 2 - 1, 0));
 
     // 보드판에 점을 적용한다
     for (int i = 0; i < dots.size(); i++) {
