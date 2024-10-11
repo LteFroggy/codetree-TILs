@@ -76,7 +76,7 @@ void search(int y, int x, const vector<vector<int>> &board, vector<vector<bool>>
 
     // 만약, 테두리에 블럭이 있다면 그것 자체로 둘레가 된다.
     if (board[y][x] == 1) {
-        answer++;
+        // answer++;
         return;
     }
 
