@@ -16,7 +16,7 @@ using namespace std;
 
 // 어떤 칸이 보드판 내부인지 체크해준다.
 inline bool inboard_check(int y, int x) {
-    return y >= 0 && y < 100 && x >= 0 && x < 99;
+    return y >= 0 && y < 100 && x >= 0 && x < 100;
 }
 
 void search(int y, int x, const vector<vector<int>> &board, vector<vector<bool>> &visited, int &answer);
@@ -46,15 +46,15 @@ int main() {
         search(y, x, board, visited, answer);
     }
 
-    // 위쪽 테두리
-    for (int x = 0; x < 100; x++) {
-        int y = 0;
-        search(y, x, board, visited, answer);
-    }
-
     // 오른쪽 테두리
     for (int y = 0; y < 100; y++) {
         int x = 99;
+        search(y, x, board, visited, answer);
+    }
+
+    // 위쪽 테두리
+    for (int x = 0; x < 100; x++) {
+        int y = 0;
         search(y, x, board, visited, answer);
     }
 
@@ -76,7 +76,7 @@ void search(int y, int x, const vector<vector<int>> &board, vector<vector<bool>>
 
     // 만약, 테두리에 블럭이 있다면 그것 자체로 둘레가 된다.
     if (board[y][x] == 1) {
-        // answer++;
+        answer++;
         return;
     }
 
@@ -95,14 +95,16 @@ void search(int y, int x, const vector<vector<int>> &board, vector<vector<bool>>
             for (int k = 0; k < 4; k++) {
                 int y_ = y + dy[k];
                 int x_ = x + dx[k];
+                if (!inboard_check(y_, x_)) continue;
                 // 가보지 않은 빈 칸을 발견하면 이동해서 체크한다.
-                if (inboard_check(y_, x_) && board[y_][x_] == 0 && !visited[y_][x_]) {
+                if (board[y_][x_] == 0 && !visited[y_][x_]) {
                     que.push({y_, x_});
                     visited[y_][x_] = true;
                 }
 
                 // 상하좌우에 블록이 있다면, 그건 둘레가 된다.
-                else if (inboard_check(y_, x_) && board[y_][x_] == 1) {
+                else if (board[y_][x_] == 1) {
+                    // cout << y + 1 << ", " << x + 1 << "에서 블록 발견" << endl;
                     answer++;
                 }
             }
