@@ -76,15 +76,17 @@ int main() {
             // lower_bound가 끝에 가면 사이즈와 같아질 수 있으므로 이건 따로 수정해준다.
             if (end_idx == texts.size()) end_idx--;
         }
-
         
-
         // 이제 두 인덱스의 차가 몇 개인지 확인한다
-        int diff = end_idx - start_idx + 1;
-        /*
+        int diff = end_idx - start_idx;
+        
         cout << "diff : " << diff << ", " << start_idx << ", " << end_idx << endl;
+        for (int j = start_idx; j <= end_idx; j++) {
+            cout << texts[j] << endl;
+        }
+
         cout << texts[start_idx] << ", " << texts[end_idx] << endl;
-        */
+        
 
         // 갯수가 충분하지 않다면 -1을 출력한다
         if (diff < order) cout << -1 << endl;
