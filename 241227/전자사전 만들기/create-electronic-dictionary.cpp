@@ -63,16 +63,28 @@ int main() {
         }
 
         else {
+            int tmp = lower_bound(texts.begin(), texts.end(), start) - texts.begin();
             start[start.length() - 1]++;
             end_idx = lower_bound(texts.begin(), texts.end(), start) - texts.begin();
+
+            // 만약, 원본 문자열의 lower_bound와 마지막 알파벳을 변형한 후의 lower_bound가 같다면 이건 애초에 없는 문장이니, 그냥 -1을 출력한다
+            if (tmp == end_idx) {
+                cout << -1 << endl;
+                continue;
+            }
 
             // lower_bound가 끝에 가면 사이즈와 같아질 수 있으므로 이건 따로 수정해준다.
             if (end_idx == texts.size()) end_idx--;
         }
 
+        
+
         // 이제 두 인덱스의 차가 몇 개인지 확인한다
         int diff = end_idx - start_idx + 1;
-        // cout << "diff : " << diff << ", " << start_idx << ", " << end_idx << endl;
+        /*
+        cout << "diff : " << diff << ", " << start_idx << ", " << end_idx << endl;
+        cout << texts[start_idx] << ", " << texts[end_idx] << endl;
+        */
 
         // 갯수가 충분하지 않다면 -1을 출력한다
         if (diff < order) cout << -1 << endl;
