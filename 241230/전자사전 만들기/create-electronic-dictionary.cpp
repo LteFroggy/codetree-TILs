@@ -57,28 +57,27 @@ int main() {
         int start_idx = start_idx = lower_bound(texts.begin(), texts.end(), start) - texts.begin();
         int end_idx;
 
-        // end_idx는 목표 문자열의 제일 마지막 알파벳을 바꿔서 비교한다, 단 마지막 알파벳이 z인 경우에는 바꿀 수 없으므로 그냥 한다.
-        if (start[start.length() - 1] == 'z') {
-            end_idx = texts.size() - 1;
+        // end_idx는 목표 문자열의 제일 마지막 알파벳을 바꿔서 비교한다, 단 마지막 알파벳이 z인 경우에 뒤는 자르고 그 앞을 비교한다.
+        while (start[start.length() - 1] == 'z') {
+            start = start.substr(0, start.length() - 1);
         }
 
-        else {
-            int tmp = lower_bound(texts.begin(), texts.end(), start) - texts.begin();
-            start[start.length() - 1]++;
-            end_idx = lower_bound(texts.begin(), texts.end(), start) - texts.begin();
+        int tmp = lower_bound(texts.begin(), texts.end(), start) - texts.begin();
+        start[start.length() - 1]++;
+        end_idx = lower_bound(texts.begin(), texts.end(), start) - texts.begin();
 
-            // 만약, 원본 문자열의 lower_bound와 마지막 알파벳을 변형한 후의 lower_bound가 같다면 이건 애초에 없는 문장이니, 그냥 -1을 출력한다
-            if (tmp == end_idx) {
-                cout << -1 << endl;
-                continue;
-            }
-
-            // lower_bound가 끝에 가면 사이즈와 같아질 수 있으므로 이건 따로 수정해준다.
-            if (end_idx == texts.size()) end_idx--;
+        // 만약, 원본 문자열의 lower_bound와 마지막 알파벳을 변형한 후의 lower_bound가 같다면 이건 애초에 없는 문장이니, 그냥 -1을 출력한다
+        if (tmp == end_idx) {
+            cout << -1 << endl;
+            continue;
         }
+
+        // lower_bound가 끝에 가면 사이즈와 같아질 수 있으므로 이건 따로 수정해준다.
+        if (end_idx == texts.size()) end_idx--;
         
         // 이제 두 인덱스의 차가 몇 개인지 확인한다
         int diff = end_idx - start_idx;
+        
         /*
         cout << "diff : " << diff << ", " << start_idx << ", " << end_idx << endl;
         for (int j = start_idx; j <= end_idx; j++) {
